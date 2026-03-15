@@ -7,58 +7,91 @@ namespace MinhasCompras.Views;
 
 public partial class ListaProduto : ContentPage
 {
-	ObservableCollection<Produto> lista = new ObservableCollection<Produto>();
+    ObservableCollection<Produto> lista = new ObservableCollection<Produto>();
 
 
-	public ListaProduto()
-	{
+    public ListaProduto()
+    {
         InitializeComponent();
 
-		lst_produto.ItemsSource = lista;
-	}
+        lst_produto.ItemsSource = lista;
+    }
 
     protected async override void OnAppearing()
     {
-        List<Produto> temp = await App.DB.GetAll();
+        try
+        {
+            List<Produto> temp = await App.DB.GetAll();
 
-		temp.ForEach (i => lista.Add(i));
+            temp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex) { await DisplayAlert("Ops", ex.Message, "ok"); }
     }
 
 
-	private void ToolbarItem_Clicked(object sender, EventArgs e)
-	{
-		try
-		{
-			Navigation.PushAsync(new Views.NovoProduto());
-		}
-		catch (Exception ex) { DisplayAlert("Ops", ex.Message,"ok"); }
-		
-	}
+    private void ToolbarItem_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            Navigation.PushAsync(new Views.NovoProduto());
+        }
+        catch (Exception ex) { DisplayAlert("Ops", ex.Message, "ok"); }
+
+    }
 
     private async void Txt_search_TextChanged(object sender, TextChangedEventArgs e)
     {
-		string s = e.NewTextValue;
-		lista.Clear();
-		
-		List<Produto> temp = await App.DB.Search(s);
-		temp.ForEach(i => lista.Add(i));
+        try
+        {
+            string s = e.NewTextValue;
+            lista.Clear();
+
+            List<Produto> temp = await App.DB.Search(s);
+            temp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex) { await DisplayAlert("Ops", ex.Message, "ok"); }
     }
 
     private void ToolbarItem_Clicked_1(object sender, EventArgs e)
     {
-		double soma = lista.Sum(i => i.Total);
+        try
+        {
+            double soma = lista.Sum(i => i.Total);
 
-		string tex = $"O total é {soma:C}";
+            string tex = $"O total é {soma:C}";
 
-		DisplayAlert("Total dos produtos é", tex, "ok");
+            DisplayAlert("Total dos produtos é", tex, "ok");
+        }
+        catch (Exception ex) { DisplayAlert("Ops", ex.Message, "ok"); }
     }
 
     private async void MenuItem_Clicked(object sender, EventArgs e)
     {
-		var menuitem = sender as MenuItem;
-		var item = menuitem.BindingContext as Produto;
-		await App.DB.Delete(item.Id);
-		lista.Remove(item);
-		await DisplayAlert("Removido","com sucesso" ,"ok");
+        try
+        {
+            var menuitem = sender as MenuItem;
+            var item = menuitem.BindingContext as Produto;
+            await App.DB.Delete(item.Id);
+            lista.Remove(item);
+            await DisplayAlert("Removido", "com sucesso", "ok");
+        }
+        catch (Exception ex) { await DisplayAlert("Ops", ex.Message, "ok"); }
+    }
+
+    private void lst_produto_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        try
+        {
+            Produto p = e.SelectedItem as Produto;
+            Navigation.PushAsync(new Views.EditarProduto
+            {
+                BindingContext = p,
+            });
+
+
+        }
+
+        catch (Exception ex) { DisplayAlert("Ops", ex.Message, "ok"); }
+
     }
 }

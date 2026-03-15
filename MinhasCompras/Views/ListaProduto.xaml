@@ -14,7 +14,7 @@
                    TextChanged="Txt_search_TextChanged"
                    
                    />
-        <ListView x:Name="lst_produto">
+        <ListView x:Name="lst_produto" ItemSelected="lst_produto_ItemSelected">
             <ListView.Header>
                 <Grid ColumnDefinitions="*,*,*,*,*,*">
                     <Label Grid.Column="0" Text="Id"/>
