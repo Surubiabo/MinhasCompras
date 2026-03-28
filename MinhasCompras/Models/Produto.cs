@@ -1,67 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SQLite;
+﻿using SQLite;
 
 namespace MinhasCompras.Models
 {
     public class Produto
     {
-        string _desc;
-        double _quant;
-        double _preco;
-
+        string _descricao;
 
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        public string Categoria { get; set; }
         public string Descricao
         {
-
-            get => _desc;
+            get => _descricao;
             set
             {
                 if (value == null)
                 {
-                    throw new Exception("Por favor preencher os dados");
+                    throw new Exception("Por favor, preencha a descrição");
                 }
-                _desc = value;
+
+                _descricao = value;
             }
-
         }
-        public double Quantidade
-        {
-            get => _quant;
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new Exception("Por favor preencher os dados");
-                }
-                _quant = value;
-            }
-
-        }
-
-
-        public double Preco
-        {
-
-            get => _preco;
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new Exception("Por favor preencher os dados");
-                }
-                _preco = value;
-            }
-
-        }
-
-
-
+        public double Quantidade { get; set; }
+        public double Preco { get; set; }
         public double Total { get => Quantidade * Preco; }
-    }
-}
+    } // Fecha classe
+} // Fecha Namespace

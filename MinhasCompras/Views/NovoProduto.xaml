@@ -15,7 +15,10 @@
 
         <Label Text="Quantidade:"/>
         <Entry x:Name="txt_Quant" Keyboard="Numeric"/>
-
+        
+        <Label Text="Categoria do Produto:"/>
+        <Entry x:Name="txt_cat"/>
+                
         <Label Text="Preco Unitário"/>
         <Entry x:Name="txt_preco" Keyboard="Numeric"/>
 

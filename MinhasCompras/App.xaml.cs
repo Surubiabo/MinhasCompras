@@ -30,6 +30,7 @@ namespace MinhasCompras
         public App()
         {
             InitializeComponent();
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-BR");
 
             MainPage = new NavigationPage(new Views.ListaProduto());
             //MainPage = new AppShell();

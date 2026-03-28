@@ -16,6 +16,9 @@
         <Label Text="Quantidade:"/>
         <Entry x:Name="txt_Quant" Text="{Binding Quantidade}" Keyboard="Numeric"/>
 
+        <Label Text="Categoria do Produto:"/>
+        <Entry x:Name="txt_cat" Text="{Binding Categoria}"/>
+
         <Label Text="Preco Unitário"/>
         <Entry x:Name="txt_preco" Text="{Binding Preco}" Keyboard="Numeric"/>
 
